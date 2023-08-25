@@ -1,0 +1,31 @@
+volumes:
+  common-redisearch:
+    name: 'common-redisearch'
+  common-redisearch-slave:
+    name: 'common-redisearch-slave'
+
+services:
+
+  redisearch:
+    image: redislabs/redisearch:${REDISEARCH_IMAGE_TAG}
+    env_file:
+      - .envs/redisearch.env
+    command: /bin/sh -c "redis-server --requirepass $${REDIS_PASSWORD} --loadmodule /usr/lib/redis/modules/redisearch.so"
+    networks:
+      common-net:
+        aliases:
+          - common-redisearch
+    volumes:
+      - common-redisearch:/data
+
+#  redisearch-slave:
+#    image: redislabs/redisearch:${REDISEARCH_IMAGE_TAG}
+#    env_file:
+#      - .envs/redisearch-slave.env
+#    command: /bin/sh -c "redis-server --requirepass $${REDISEARCH_PASSWORD} --slaveof $${REDISEARCH_MASTER_HOST} $${REDISEARCH_MASTER_PORT} --masterauth $${REDISEARCH_MASTER_PASSWORD} --loadmodule /usr/lib/redis/modules/redisearch.so"
+#    networks:
+#      common-net:
+#        aliases:
+#          - common-redisearch-slave
+#    volumes:
+#      - common-redisearch-slave:/data

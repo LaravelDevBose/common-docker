@@ -1,0 +1,16 @@
+volumes:
+  common-rabbitmq:
+    name: 'common-rabbitmq'
+
+services:
+  rabbitmq:
+    image: rabbitmq:${RABBITMQ_IMAGE_TAG}
+    env_file:
+      - .envs/rabbitmq.env
+    networks:
+      common-net:
+        aliases:
+          - common-rabbitmq
+    container_name: common-rabbitmq
+    volumes:
+      - common-rabbitmq:/var/lib/rabbitmq

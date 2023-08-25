@@ -1,0 +1,19 @@
+volumes:
+  common-cassandra-db:
+    name: 'common-cassandra-db'
+
+services:
+
+  cassandra:
+    image: cassandra:${CASSANDRA_IMAGE_TAG}
+    env_file:
+      - .envs/cassandra.env
+    volumes:
+      - common-cassandra-db:/var/lib/cassandra
+    container_name: common-cassandra
+    ports:
+      - "9042:9042"
+    networks:
+      common-net:
+        aliases:
+          - common-cassandra

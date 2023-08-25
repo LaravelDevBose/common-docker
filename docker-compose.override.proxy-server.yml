@@ -1,0 +1,11 @@
+services:
+
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    ports:
+      - "80:80"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    container_name: proxy-server
+    networks:
+      - common-net

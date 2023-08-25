@@ -1,0 +1,18 @@
+networks:
+  common-traefik-net:
+    external: true
+
+services:
+
+  traefik:
+    image: traefik:${TRAEFIK_IMAGE_TAG}
+    env_file:
+      - .envs/traefik.env
+    labels:
+      - "traefik.enable=true"
+    env_file:
+      - .envs/traefik.env
+    networks:
+      - common-traefik-net
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
